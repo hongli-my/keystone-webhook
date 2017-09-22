@@ -31,6 +31,7 @@ func (keystoneAuthenticator *KeystoneAuthenticator) AuthenticateToken(token stri
 		return nil, false, errors.New("Failed to authenticate")
 	}
 
+	// ignore catalog and role
 	obj := struct {
 		Token struct {
 			User struct {
@@ -41,9 +42,6 @@ func (keystoneAuthenticator *KeystoneAuthenticator) AuthenticateToken(token stri
 				Id   string `json:"id"`
 				Name string `json:"name"`
 			} `json:"project"`
-			Roles []struct {
-				Name string `json:"name"`
-			} `json:"roles"`
 		} `json:"token"`
 	}{}
 

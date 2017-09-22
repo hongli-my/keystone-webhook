@@ -40,8 +40,10 @@ func (h *WebhookHandler) authenticateToken(w http.ResponseWriter, r *http.Reques
 	user, authenticated, err := h.Authenticator.AuthenticateToken(token)
 
 	if !authenticated {
-		var response status
-		response.Authenticated = false
+
+		response := status{
+			Authenticated: false,
+		}
 		data["status"] = response
 
 		output, err := json.MarshalIndent(data, "", "  ")
@@ -55,15 +57,17 @@ func (h *WebhookHandler) authenticateToken(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	var info userInfo
-	info.Username = user.GetName()
-	info.UID = user.GetUID()
-	info.Groups = user.GetGroups()
-	info.Extra = user.GetExtra()
+	info := userInfo{
+		Username: user.GetName(),
+		UID:      user.GetUID(),
+		Groups:   user.GetGroups(),
+		Extra:    user.GetExtra(),
+	}
 
-	var response status
-	response.Authenticated = true
-	response.User = info
+	response := status{
+		Authenticated: true,
+		User:          info,
+	}
 
 	data["status"] = response
 

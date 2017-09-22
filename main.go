@@ -18,7 +18,7 @@ func main() {
 
 	authenticationHandler, err := keystone.NewKeystoneAuthenticator(config.KeystoneUrl)
 	if err != nil {
-		fmt.Println("New Keystone client error: ", err)
+		fmt.Fprintf(os.Stderr, "New Keystone client error %v\n", err)
 		os.Exit(1)
 	}
 	http.Handle("/webhook", webHookServer(authenticationHandler))

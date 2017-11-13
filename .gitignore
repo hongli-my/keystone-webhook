@@ -1,4 +1,6 @@
 .idea
+.tags_sorted_by_file
+.tags
 nginx.key
 glide*
 server.crt
